@@ -5,11 +5,11 @@ require('../../config/database.php');
 include_once('../../model/Todo.php');
 
 $todo = new Todo($connection);
-$todos = $todo->getAllTask();
+$todos = $todo->getAllTaskInSection();
 
 $num = $todos->rowCount();
 if ($num > 0) {
-    $todolist = [];
+    // $todolist = [];
     $todolist['taskList'] = [];
 
     while ($row = $todos->fetch(PDO::FETCH_ASSOC)) {

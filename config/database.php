@@ -4,6 +4,11 @@ $username = "root";
 $password = "";
 $database = "newtodoist";
 $connection = null;
+// $servername = "localhost";
+// $username = "id21224018_databaseusername";
+// $password = "19124321My@";
+// $database = "id21224018_todoistdatabase";
+// $connection = null;
 
 
 try {
