@@ -2,9 +2,9 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 require('../../config/database.php');
-include_once('../../model/Todo.php');
+include_once('../../model/Task.php');
 
-$todo = new Todo($connection);
+$todo = new Task($connection);
 $todos = $todo->getAllTaskInSection();
 
 $num = $todos->rowCount();

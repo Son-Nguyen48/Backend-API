@@ -3,7 +3,7 @@ class Section
 {
     private $connection;
 
-    // Todo properties 
+    // Task properties 
     public $id;
     public $title;
     public $project_id;

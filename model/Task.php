@@ -1,9 +1,9 @@
 <?php
-class Todo
+class Task
 {
     private $connection;
 
-    // Todo properties 
+    // Task properties 
     public $id;
     public $title;
     public $description;
