@@ -27,15 +27,9 @@ class Todo
 
     public function getAllTask()
     {
-        $query = "SELECT * FROM task ORDER BY id ASC";
-        $statement = $this->connection->prepare($query);
-        $statement->execute();
-        return $statement;
-    }
-
-    public function getAllSection()
-    {
-        $query = "SELECT * FROM section ORDER BY id ASC";
+        // $offset_value = 2;
+        // $query = "SELECT * FROM task  ORDER BY id ASC LIMIT 2 OFFSET " . $offset_value;
+        $query = "SELECT * FROM task  ORDER BY id ASC";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
