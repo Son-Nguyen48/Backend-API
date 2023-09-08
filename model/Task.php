@@ -71,4 +71,23 @@ class Task
         $this->edited_at = $row['edited_at'];
         $this->dueDate = $row['dueDate'];
     }
+
+    public function addTaskInProject($data)
+    {
+        $query = "INSERT INTO task (title, description)
+        VALUES (?, ?) ";
+        $statement = $this->connection->prepare($query);
+        $this->title = $data['title'];
+        $this->description = $data['description'];
+        $statement->bindParam(1, $this->title);
+        $statement->bindParam(2, $this->description);
+        if ($statement->execute()) {
+            echo "Success!";
+        } else {
+            echo "Error!";
+        }
+    }
+    public function addTaskInSection(array $data)
+    {
+    }
 }
