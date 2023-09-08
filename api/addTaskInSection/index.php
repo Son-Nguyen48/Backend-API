@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['title'])) {
         $title = $_POST['title'];
         $description = $_POST['description'];
-        $project_id = $_POST['project_id'];
+        $section_id = $_POST['section_id'];
     }
 }
 $formData = [
     'title' => $title,
     'description' => $description,
-    'project_id' => $project_id
+    'section_id' => $section_id
 ];
 // print_r($formData);
-$task->addTaskInProject($formData);
+$task->addTaskInSection($formData);
