@@ -43,7 +43,7 @@ class Task
         return $statement;
     }
 
-    public function getAllTaskNotInSection()
+    public function getAllTaskProject()
     {
         $query = "SELECT * FROM task WHERE NOT project_id='' ORDER BY id ASC";
         $statement = $this->connection->prepare($query);
@@ -70,5 +70,40 @@ class Task
         $this->created_at = $row['created_at'];
         $this->edited_at = $row['edited_at'];
         $this->dueDate = $row['dueDate'];
+    }
+
+    public function addTaskInProject(array $formData)
+    {
+        $query = "INSERT INTO task (title, description, project_id)
+        VALUES (?, ?, ?) ";
+        $statement = $this->connection->prepare($query);
+        $this->title = $formData['title'];
+        $this->description = $formData['description'];
+        $this->project_id = $formData['project_id'];
+        $statement->bindParam(3, $this->project_id);
+        $statement->bindParam(1, $this->title);
+        $statement->bindParam(2, $this->description);
+        if ($statement->execute()) {
+            echo  PHP_EOL . "Success!";
+        } else {
+            echo "Error!";
+        }
+    }
+    public function addTaskInSection(array $formData)
+    {
+        $query = "INSERT INTO task (title, description, section_id)
+        VALUES (?, ?,  ?) ";
+        $statement = $this->connection->prepare($query);
+        $this->title = $formData['title'];
+        $this->description = $formData['description'];
+        $this->section_id = $formData['section_id'];
+        $statement->bindParam(1, $this->title);
+        $statement->bindParam(2, $this->description);
+        $statement->bindParam(3, $this->section_id);
+        if ($statement->execute()) {
+            echo PHP_EOL . "Success!";
+        } else {
+            echo "Error!";
+        }
     }
 }
