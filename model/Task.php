@@ -43,7 +43,7 @@ class Task
         return $statement;
     }
 
-    public function getAllTaskNotInSection()
+    public function getAllTaskProject()
     {
         $query = "SELECT * FROM task WHERE NOT project_id='' ORDER BY id ASC";
         $statement = $this->connection->prepare($query);
@@ -80,11 +80,11 @@ class Task
         $this->title = $formData['title'];
         $this->description = $formData['description'];
         $this->project_id = $formData['project_id'];
+        $statement->bindParam(3, $this->project_id);
         $statement->bindParam(1, $this->title);
         $statement->bindParam(2, $this->description);
-        $statement->bindParam(3, $this->project_id);
         if ($statement->execute()) {
-            echo "Success!";
+            echo  PHP_EOL . "Success!";
         } else {
             echo "Error!";
         }
@@ -101,7 +101,7 @@ class Task
         $statement->bindParam(2, $this->description);
         $statement->bindParam(3, $this->section_id);
         if ($statement->execute()) {
-            echo "Success!";
+            echo PHP_EOL . "Success!";
         } else {
             echo "Error!";
         }

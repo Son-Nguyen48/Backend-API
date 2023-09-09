@@ -1,11 +1,12 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 header('Content-Type: application/json');
 require('../../config/database.php');
 include_once('../../model/Task.php');
 
 $todo = new Task($connection);
-$todos = $todo->getAllTaskNotInSection();
+$todos = $todo->getAllTaskProject();
 
 $num = $todos->rowCount();
 if ($num > 0) {
