@@ -14,4 +14,4 @@ $formData = [
     'section_id' => $data['id']
 ];
 // print_r($formData);
-$task->addTaskInSection($formData);
+$task->addTaskInSection($formData, $data);

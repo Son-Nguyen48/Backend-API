@@ -72,7 +72,7 @@ class Task
         $this->dueDate = $row['dueDate'];
     }
 
-    public function addTaskInProject(array $formData)
+    public function addTaskInProject(array $formData, array $data)
     {
         $query = "INSERT INTO task (title, description, project_id)
         VALUES (?, ?, ?) ";
@@ -84,12 +84,14 @@ class Task
         $statement->bindParam(1, $this->title);
         $statement->bindParam(2, $this->description);
         if ($statement->execute()) {
-            echo  PHP_EOL . "Success!";
+            $lastInsertId = $this->connection->lastInsertId();
+            $data['project_id'] = $lastInsertId;
+            echo json_encode($data);
         } else {
             echo "Error!";
         }
     }
-    public function addTaskInSection(array $formData)
+    public function addTaskInSection(array $formData, array $data)
     {
         $query = "INSERT INTO task (title, description, section_id)
         VALUES (?, ?,  ?) ";
@@ -101,7 +103,9 @@ class Task
         $statement->bindParam(2, $this->description);
         $statement->bindParam(3, $this->section_id);
         if ($statement->execute()) {
-            echo PHP_EOL . "Success!";
+            $lastInsertId = $this->connection->lastInsertId();
+            $data['project_id'] = $lastInsertId;
+            echo json_encode($data);
         } else {
             echo "Error!";
         }
