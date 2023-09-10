@@ -20,6 +20,4 @@ $formData = [
     'project_id' => $data['id']
 ];
 // // print_r($formData);
-$lastInsertId = $task->addTaskInProject($formData);
-$data['project_id'] = $lastInsertId;
-echo json_encode($data);
+$task->addTaskInProject($formData, $data);
