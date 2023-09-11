@@ -131,4 +131,39 @@ class Task
             'result' => $result
         ]);
     }
+
+    public function updateTask(array $data)
+    {
+        $set = "";
+        foreach ($data as $key => $value) {
+            if ($key !== "id")
+                $set .= "$key = :$key,";
+        }
+        $set = substr($set, 0, -1); // Cắt dấu phẩy cuối cùng của chuỗi $set
+
+        //Cách 2 nếu ko muốn cắt chuỗi
+        // - Tư tưởng là chuyển key của $data sang một mảng khác rồi nối các key lại thành chuỗi
+        // - $set = ['title = :title','description = :description'];
+        // - Sau đó dùng implode để nối các phần tử trên thành chuỗi phân cách nhau bằng dấu phẩy: implode(",",$set) Kết quả sẽ là "title = :title,description = :description"
+        $query = "UPDATE task SET $set WHERE id = :id";
+        $statement = $this->connection->prepare($query);
+        foreach ($data as $key => $value) {
+            if ($key !== "id") {
+                $statement->bindParam(":$key", $value);
+            }
+        }
+        $statement->bindParam(':id', $data['id']);
+        $statement->execute();
+
+        $query = "SELECT * FROM task WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':id', $data['id']);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            'data' => $data,
+            'result' => $result
+        ]);
+    }
 }
