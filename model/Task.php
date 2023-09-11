@@ -110,4 +110,25 @@ class Task
             echo "Error!";
         }
     }
+
+    public function setPriority(int $priority, int $id)
+    {
+        $query = "UPDATE task SET priority = :priority WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':priority', $priority);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $query = "SELECT * FROM task WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            'id' => $id,
+            'priority' => $priority,
+            'result' => $result
+        ]);
+    }
 }
