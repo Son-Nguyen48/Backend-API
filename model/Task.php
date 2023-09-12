@@ -29,7 +29,7 @@ class Task
     {
         // $offset_value = 2;
         // $query = "SELECT * FROM task  ORDER BY id ASC LIMIT 2 OFFSET " . $offset_value;
-        $query = "SELECT * FROM task  ORDER BY id ASC";
+        $query = "SELECT * FROM task  ORDER BY id DESC";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
@@ -37,7 +37,7 @@ class Task
 
     public function getAllTaskInSection()
     {
-        $query = "SELECT * FROM task WHERE NOT section_id='' ORDER BY id ASC";
+        $query = "SELECT * FROM task WHERE NOT section_id='' ORDER BY id DESC";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
@@ -45,7 +45,7 @@ class Task
 
     public function getAllTaskProject()
     {
-        $query = "SELECT * FROM task WHERE NOT project_id='' ORDER BY id ASC";
+        $query = "SELECT * FROM task WHERE NOT project_id='' ORDER BY id DESC";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
@@ -165,5 +165,55 @@ class Task
             'data' => $data,
             'result' => $result
         ]);
+    }
+
+    public function deleteTask($id)
+    {
+        // Select bản ghi cần xoá 
+        echo $id . PHP_EOL;
+        $query = "SELECT * FROM task WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            'id' => $id,
+            'result' => $result
+        ]);
+
+        // Select bản ghi có khoá ngoại là khoá chính của bản ghi trên 
+        $query = "SELECT * FROM comment WHERE task_id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            'result' => $result
+        ]);
+
+        $query = "DELETE FROM comment WHERE id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $result['id']);
+        $statement->execute();
+
+        $query = "SELECT * FROM task_label WHERE task_id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            'result' => $result
+        ]);
+
+        $query = "DELETE FROM task_label WHERE id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $result['id']);
+        $statement->execute();
+
+        $query = "DELETE FROM task WHERE id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
     }
 }
