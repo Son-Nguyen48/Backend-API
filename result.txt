@@ -1,6 +1,0 @@
-<br/><b>Fatal error</b>:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE id = '38'' at line 1 in G:\Backend-Api\Backend\model\Task.php:151
-Stack trace:
-#0 G:\Backend-Api\Backend\model\Task.php(151): PDOStatement-&gt;execute()
-#1 G:\Backend-Api\Backend\api\updateTask\index.php(23): Task-&gt;updateTask(Array)
-#2 {main}
-  thrown in <b>G:\Backend-Api\Backend\model\Task.php</b>on line<b>151</b><br />
